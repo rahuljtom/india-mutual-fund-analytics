@@ -1,0 +1,4 @@
+[sqlfluff]
+dialect = duckdb
+max_line_length = 130
+exclude_rules = AM04, AM06, RF02, ST06, LT05

@@ -1,0 +1,5 @@
+duckdb==1.4.5
+pandas==2.3.3
+matplotlib
+pytest
+sqlfluff==4.1.0
