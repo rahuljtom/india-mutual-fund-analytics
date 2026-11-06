@@ -1,5 +1,6 @@
 -- Staging: read the parsed CSV files as text, then type them. Bad values become NULL (try_cast) so they can be
--- counted in the quality report instead of stopping the load.
+-- counted in the quality report instead of stopping the load. Delimiter and quoting are set explicitly: auto-detection
+-- guessed wrong on a file where a scheme name contains a comma.
 -- __INTERIM_GLOB__ is replaced by src/mfa/pipeline.py.
 create or replace table stg_nav as
 select
@@ -13,4 +14,11 @@ select
     amc,
     scheme_type,
     category_raw
-from read_csv('__INTERIM_GLOB__', header = true, all_varchar = true);
+from read_csv(
+    '__INTERIM_GLOB__',
+    header = true,
+    all_varchar = true,
+    delim = ',',
+    quote = '"',
+    escape = '"'
+);
