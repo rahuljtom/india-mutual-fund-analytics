@@ -16,3 +16,14 @@ Short records of choices that change results, and why they were made.
    net of fund costs, so "beats the benchmark" is slightly easier than beating the index.
 7. **Small categories are not reported.** Categories with fewer than `min_schemes_per_category` schemes are dropped from
    summary tables because medians and quartiles on a handful of funds mislead.
+8. **Harmonised category labels.** AMFI uses "Equity Scheme" and "Equity Schemes" for the same group, and splits or renames
+   some categories over time. The raw heading is kept in `dim_category.category_raw`; `asset_class` and `sub_category` are
+   harmonised ("Sectoral Fund" and "Thematic Fund" fold into "Sectoral/ Thematic", "ELSS- Tax Saver Fund" into "ELSS").
+   Older headings with no separator (for example "Growth", "ELSS" on closed-ended or pre-2020 labels) are left whole and
+   stay outside the equity universe, because they cannot be mapped to a current category with confidence.
+9. **Option type from the option column first, then the name.** The option column is empty for more than half of schemes.
+   "Dividend" alone is not treated as an IDCW marker, because Dividend Yield funds are an equity category with Growth options.
+10. **Attrition is measured, not assumed away.** Schemes ranked in the first window but without a NAV at the end date stay
+   in the first ranking and are reported in `r08_attrition`. The repeat rate itself is conditional on surviving.
+11. **Explicit CSV quoting.** DuckDB's auto-detection chose the wrong quote setting on one file where a scheme name contains a
+    comma, so delimiter, quote and escape are set in the staging query.

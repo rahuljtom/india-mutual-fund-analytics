@@ -7,7 +7,7 @@ All tables live in the DuckDB file `data/mf.duckdb` (built by `make build`, not 
 AMFI (Association of Mutual Funds in India) historical NAV report, downloaded from the public portal
 `portal.amfiindia.com/DownloadNAVHistoryReport_Po.aspx` in windows of at most 90 days. NAV is the net asset value
 per unit, published for each scheme and date. The raw file is semi-structured text; `src/mfa/parse.py` turns it into
-rows. The raw files are not committed (about 2.5 GB uncompressed); `make download` recreates them.
+rows. The raw files are not committed (110 MB compressed, 2.3 GB as text); `make download` recreates them.
 
 ## Warehouse tables
 

@@ -16,7 +16,9 @@ outperformance within a category tend to repeat? The unit of analysis is a schem
    schema and removes duplicate scheme-date rows.
 4. **Check.** `r03_data_quality` counts every exclusion and verifies there are no duplicate keys or orphan rows.
 5. **Analyse.** Numbered SQL files build the analysis tables; `mfa.pipeline` exports each result table to CSV.
-6. **Test.** `pytest` runs the parser, then the real SQL files, against a synthetic history whose answers are worked out
+6. **Audit.** `scripts/audit_headlines.py` recomputes headline numbers (rolling returns, drawdowns, plan pairing and gap)
+   in pandas from the raw NAVs and fails if they differ from the result tables.
+7. **Test.** `pytest` runs the parser, then the real SQL files, against a synthetic history whose answers are worked out
    by hand (compound growth, a drawdown with known peak, trough and recovery, plan pairs with a known cost gap).
 
 ## Definitions
@@ -32,7 +34,7 @@ outperformance within a category tend to repeat? The unit of analysis is a schem
 - **Volatility.** Sample standard deviation of daily returns times the square root of 252.
 - **Return per unit of volatility.** CAGR divided by annualised volatility. No risk-free rate, so this is a ranking device.
 - **Persistence.** Within a category, schemes are split into quartiles on their return in one window, then again in the
-  next window. A top-quartile scheme that repeats at random would stay in the top quartile 25% of the time.
+  next window (survivors only; schemes with no NAV at the end are reported as attrition). A top-quartile scheme that repeats at random would stay in the top quartile 25% of the time.
 - **Direct vs Regular.** Plans are paired by fund house and a normalised name stem. Both hold the same portfolio, so the
   return gap is mostly the extra distribution cost in the Regular plan.
 
