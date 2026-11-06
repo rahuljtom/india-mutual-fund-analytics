@@ -94,8 +94,12 @@ def piece(i):
 
 
 def test_persistence_top_quartile_repeats_when_leader_stays_leader(con):
-    row = q(con, "select top_quartile_schemes, stayed_top_quartile, repeat_rate_pct from r08_top_quartile_repeat")[0]
-    assert row == (1, 1, 100.0)  # 1004 led both periods
+    row = q(con, "select top_quartile_schemes, survivors, stayed_top_quartile, repeat_rate_pct from r08_top_quartile_repeat")[0]
+    assert row == (1, 1, 1, 100.0)  # 1004 led both periods
+
+
+def test_attrition_is_zero_when_every_scheme_survives(con):
+    assert q(con, "select sum(schemes), sum(no_nav_at_as_of) from r08_attrition") == [(2, 0)]
 
 
 def test_plan_pairs_found_and_gap_is_about_the_modelled_cost(con):
