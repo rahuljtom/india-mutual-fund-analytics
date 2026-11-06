@@ -47,18 +47,40 @@ from (
     where amc is not null
 );
 
+-- AMFI renamed and merged categories over time ("Equity Scheme" vs "Equity Schemes", "Sectoral Fund" and "Thematic Fund" vs
+-- "Sectoral/ Thematic", "ELSS- Tax Saver Fund" vs "ELSS"). The raw heading is kept; asset_class and sub_category are the
+-- harmonised labels the analysis groups on. A heading with no " - " (older style) is used whole for both.
 insert into dim_category
+with split as (
+    select
+        scheme_type,
+        category_raw,
+        case
+            when strpos(category_raw, ' - ') > 0 then trim(split_part(category_raw, ' - ', 1)) else category_raw
+        end as asset_raw,
+        case
+            when strpos(category_raw, ' - ') > 0 then trim(substr(category_raw, strpos(category_raw, ' - ') + 3)) else category_raw
+        end as sub_raw
+    from (
+        select distinct
+            scheme_type,
+            category_raw
+        from stg_nav
+        where category_raw is not null
+    )
+)
+
 select
     row_number() over (order by scheme_type, category_raw) as category_id,
     scheme_type,
     category_raw,
-    trim(split_part(category_raw, ' - ', 1)) as asset_class,
-    coalesce(nullif(trim(substr(category_raw, strpos(category_raw, ' - ') + 3)), ''), category_raw) as sub_category
-from (select distinct
-    scheme_type,
-    category_raw
-from stg_nav
-where category_raw is not null);
+    regexp_replace(asset_raw, '^(Equity|Hybrid|Debt) Schemes$', '\1 Scheme') as asset_class,
+    case
+        when sub_raw in ('Sectoral Fund', 'Thematic Fund') then 'Sectoral/ Thematic'
+        when sub_raw like 'ELSS%' then 'ELSS'
+        else sub_raw
+    end as sub_category
+from split;
 
 insert into dim_scheme
 with latest as (
@@ -88,11 +110,16 @@ select
         when l.plan ilike 'regular%' or l.scheme_name ilike '%regular%' then 'Regular'
         else 'Unknown'
     end as plan_type,
+    -- The option column is empty for many schemes, so the name is the fallback. "Dividend" alone is not an IDCW marker:
+    -- Dividend Yield funds are an equity category and have Growth options.
     case
+        when l.option_raw ilike '%growth%' then 'Growth'
+        when l.option_raw ilike '%idcw%' or l.option_raw ilike '%dividend%' or l.option_raw ilike '%income distribution%'
+            then 'IDCW'
         when
-            l.option_raw ilike '%idcw%' or l.option_raw ilike '%dividend%' or l.scheme_name ilike '%idcw%'
-            or l.scheme_name ilike '%dividend%' or l.scheme_name ilike '%payout%' then 'IDCW'
-        when l.option_raw ilike '%growth%' or l.scheme_name ilike '%growth%' then 'Growth'
+            l.scheme_name ilike '%idcw%' or l.scheme_name ilike '%payout%' or l.scheme_name ilike '%income distribution%'
+            or regexp_matches(l.scheme_name, '(?i)dividend\s*(payout|reinvest|option|plan)') then 'IDCW'
+        when l.scheme_name ilike '%growth%' then 'Growth'
         else 'Other'
     end as option_type,
     l.isin_primary,
