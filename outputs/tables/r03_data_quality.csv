@@ -1,0 +1,13 @@
+check_name,n,pct_of_staged_rows
+staged_rows,17345719,100.0
+bad_scheme_code,0,0.0
+bad_date,0,0.0
+nav_not_numeric,18,0.0
+nav_not_positive,177391,1.023
+fact_rows,17168310,98.977
+duplicate_keys_in_fact,0,0.0
+orphan_fact_rows,0,0.0
+schemes,18432,0.106
+plan_unknown,2510,0.014
+option_other,2342,0.014
+weekend_navs,636680,3.671

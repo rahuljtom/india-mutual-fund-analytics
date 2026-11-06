@@ -38,11 +38,12 @@ def rolling_returns():
 
 def drawdowns():
     df = pd.read_csv(TABLES / "r06_drawdown_by_category.csv").sort_values("median_max_drawdown_pct", ascending=False)
+    df = df.iloc[::-1]  # barh draws the first row at the bottom, so the shallowest drawdown ends up on top
     fig, ax = plt.subplots(figsize=(9, 0.45 * len(df) + 1.5))
     ax.barh(df["sub_category"], df["median_max_drawdown_pct"], color=RED)
     for y, (dd, days) in enumerate(zip(df["median_max_drawdown_pct"], df["median_days_trough_to_recovery"])):
         label = "not recovered" if pd.isna(days) else f"{int(days)} days to recover"
-        ax.text(dd, y, f"  {label}", va="center", ha="right", fontsize=8, color="black")
+        ax.text(-0.8, y, label + "  ", va="center", ha="right", fontsize=8, color="white")
     ax.set_xlabel("Median maximum drawdown, % (2018 to 2025)")
     ax.spines[["top", "right"]].set_visible(False)
     _save(fig, "drawdowns.png")
@@ -60,7 +61,7 @@ def plan_gap():
 
 def persistence():
     df = pd.read_csv(TABLES / "r08_quartile_transitions.csv")
-    grid = df.pivot(index="quartile_first", columns="quartile_second", values="pct_of_first_quartile").fillna(0)
+    grid = df.pivot(index="quartile_first", columns="quartile_second", values="pct_of_surviving_first_quartile").fillna(0)
     fig, ax = plt.subplots(figsize=(5.5, 4.5))
     im = ax.imshow(grid.values, cmap="Blues", vmin=0, vmax=60)
     for i in range(grid.shape[0]):
@@ -72,7 +73,7 @@ def persistence():
     ax.set_yticklabels(grid.index)
     ax.set_xlabel("Quartile in the next 3 years (1 = best)")
     ax.set_ylabel("Quartile in the first 3 years")
-    fig.colorbar(im, ax=ax, label="% of first-period quartile")
+    fig.colorbar(im, ax=ax, label="% of surviving first-period quartile")
     _save(fig, "persistence.png")
 
 

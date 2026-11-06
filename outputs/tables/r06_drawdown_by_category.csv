@@ -1,0 +1,10 @@
+sub_category,schemes,median_max_drawdown_pct,worst_max_drawdown_pct,median_days_peak_to_trough,pct_recovered,median_days_trough_to_recovery
+Flexi Cap Fund,20,-36.3,-41.8,40.0,100.0,233.0
+Mid Cap Fund,19,-36.4,-45.1,54.0,100.0,233.0
+Focused Fund,13,-36.7,-45.6,40.0,100.0,232.0
+Large Cap Fund,24,-36.7,-40.8,66.0,95.8,231.0
+ELSS,29,-36.8,-51.9,45.0,100.0,233.0
+Large & Mid Cap Fund,21,-37.4,-45.0,59.0,100.0,239.0
+Sectoral/ Thematic,75,-37.5,-63.1,137.0,100.0,259.0
+Value Fund,12,-40.7,-57.5,790.0,100.0,250.0
+Small Cap Fund,14,-48.4,-65.3,799.0,100.0,265.0
