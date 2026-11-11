@@ -27,3 +27,10 @@ Short records of choices that change results, and why they were made.
    in the first ranking and are reported in `r08_attrition`. The repeat rate itself is conditional on surviving.
 11. **Explicit CSV quoting.** DuckDB's auto-detection chose the wrong quote setting on one file where a scheme name contains a
     comma, so delimiter, quote and escape are set in the staging query.
+12. **Month-end panel for the backtest and holding periods.** Daily windows would give many nearly identical, overlapping
+    observations; month-end NAVs give about one per scheme and month, and a month with no NAV within `stale_gap_days` of its end
+    is missing rather than filled.
+13. **Vanished funds are reported, and excess is measured on survivors.** A rule that picks a fund which later closes would
+    otherwise lose that fund from the average and look better. Reporting `pct_vanished` next to the result keeps this visible.
+14. **Cost drag uses a scenario return.** The data's 2021 to 2025 return level should not be assumed to repeat, so the rupee
+    illustration varies the gross return (8% to 15%) and takes only the Direct-minus-Regular gap from the data.

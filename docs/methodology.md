@@ -38,9 +38,23 @@ outperformance within a category tend to repeat? The unit of analysis is a schem
 - **Direct vs Regular.** Plans are paired by fund house and a normalised name stem. Both hold the same portfolio, so the
   return gap is mostly the extra distribution cost in the Regular plan.
 
+- **Backtest (`sql/11`).** On 31 December of each year from 2020 to 2024 only the trailing 24 months of month-end NAVs are used to
+  rank schemes inside each category (at least `min_schemes_per_category`): top quartile of trailing return, everything except the
+  bottom quartile, the bottom quartile itself, and the lowest-volatility third (volatility = standard deviation of 24 monthly
+  returns). Outcome: return over the next 12 months minus the average of all schemes in the category and year. Picks with no NAV at
+  the end of the forward year are counted as vanished and the excess is measured on survivors, so survivorship can only flatter
+  a rule. There are five test years and overlapping funds, so the test cannot prove that no edge exists.
+- **Holding periods (`sql/12`).** Month-end NAVs (a month counts only if its last NAV is within `stale_gap_days` of month end);
+  every pair of month ends 12, 36 or 60 months apart is a window. Windows overlap and funds hold similar stocks, so they are not
+  independent observations.
+- **Cost illustration (`sql/12`).** Future value of a monthly SIP (annuity due, monthly rate from the annual return) at a gross
+  Direct return chosen as a scenario, and at that return minus the data's median Direct-minus-Regular gap.
+- **Decision page.** `python -m mfa.site` builds `docs/index.html` from `outputs/tables`; all numbers in its text are computed
+  from the tables.
+
 ## Reproducing
 
 ```
 make setup
-make all        # download, build, charts, lint and tests
+make all        # download, build, charts, site, lint and tests
 ```

@@ -43,3 +43,8 @@ rows. The raw files are not committed (110 MB compressed, 2.3 GB as text); `make
 | `r07_scheme_risk_return`, `r07_risk_return_by_category` | `return_per_vol` = CAGR / annualised volatility, no risk-free rate. |
 | `r08_quartile_transitions`, `r08_top_quartile_repeat` | Movement between category quartiles across two consecutive windows. |
 | `r09_direct_vs_regular` | Median CAGR gap, in percentage points, between paired Direct and Regular plans. |
+| `r10_backtest_by_year`, `r10_backtest_summary` | Walk-forward test on 31 December 2020 to 2024: schemes picked inside each category from the trailing 24 months, measured over the next 12 months against the category average. `pct_vanished` = picks with no NAV at the end of the forward year; excess is measured on survivors. |
+| `r11_cost_drag` | Rupees lost to the Regular plan for a monthly SIP of 10,000 and a one-off 10 lakh. The gap is the data's median Direct-minus-Regular gap; the gross Direct return is a scenario input. |
+| `r12_holding_period` | Annualised return percentiles and share of windows with a loss for every month-end start and finish, by holding period (1, 3, 5 years) and category. |
+| `r13_funnel`, `r13_data_mess`, `r13_category_harmonisation` | Rows and schemes surviving each filter; each source problem with count, handling and effect if ignored; raw category labels and the harmonised category they map to. |
+| `r03_parse_summary` | Totals over every parsed report file: lines of each kind seen by the parser, and how many were unclassified. |
