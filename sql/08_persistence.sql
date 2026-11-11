@@ -66,7 +66,7 @@ select
 from scheme_quartiles
 where schemes_in_category >= (select min_schemes_per_category from params)
 group by sub_category
-order by repeat_rate_pct desc;
+order by repeat_rate_pct desc, sub_category asc;
 
 create or replace table r08_attrition as
 select

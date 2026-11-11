@@ -45,7 +45,7 @@ select
 from metrics as m
 inner join analysis_universe as u on m.scheme_code = u.scheme_code
 where not u.is_benchmark
-order by u.sub_category, rank_in_category;
+order by u.sub_category asc, rank_in_category asc, u.scheme_code asc;
 
 create or replace table r07_risk_return_by_category as
 select
@@ -57,4 +57,4 @@ select
 from r07_scheme_risk_return
 group by sub_category
 having count(*) >= (select min_schemes_per_category from params)
-order by median_return_per_vol desc;
+order by median_return_per_vol desc, sub_category asc;

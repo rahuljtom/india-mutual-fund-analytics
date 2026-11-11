@@ -66,4 +66,4 @@ from scheme_drawdowns as d
 inner join analysis_universe as u on d.scheme_code = u.scheme_code
 group by u.sub_category
 having count(*) >= (select min_schemes_per_category from params)
-order by median_max_drawdown_pct desc;
+order by median_max_drawdown_pct desc, u.sub_category asc;

@@ -37,7 +37,7 @@ inner join analysis_universe as u on r.scheme_code = u.scheme_code
 where not u.is_benchmark
 group by u.sub_category
 having count(distinct r.scheme_code) >= (select min_schemes_per_category from params)
-order by median_cagr_pct desc;
+order by median_cagr_pct desc, sub_category asc;
 
 -- How often does the typical scheme in a category beat the Nifty 50 index-fund benchmark? Compared date by date:
 -- the category median rolling return against the median across benchmark index funds on that date.
@@ -75,4 +75,4 @@ select
 from category_day as c
 inner join bench as b on c.nav_date = b.nav_date
 group by c.sub_category
-order by median_excess_cagr_pp desc;
+order by median_excess_cagr_pp desc, sub_category asc;

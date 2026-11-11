@@ -77,4 +77,4 @@ select
     round(100 * min(direct_cagr - regular_cagr), 2) as min_gap_pp,
     round(100 * max(direct_cagr - regular_cagr), 2) as max_gap_pp
 from plan_pair_returns
-order by median_gap_pp desc;
+order by median_gap_pp desc, sub_category asc;
