@@ -79,6 +79,17 @@ def write_parse_report(reports, path):
             writer.writerow([name] + [rep.get(k, 0) for k in keys])
 
 
+def write_parse_summary(report_path, out_path):
+    """Totals over every parsed raw file: how many text lines of each kind the parser saw."""
+    with open(report_path, newline="") as fh:
+        rows = list(csv.DictReader(fh))
+    totals = {k: sum(int(r[k]) for r in rows) for k in rows[0] if k != "file"}
+    with open(out_path, "w", newline="") as fh:
+        writer = csv.writer(fh)
+        writer.writerow(["files"] + list(totals))
+        writer.writerow([len(rows)] + list(totals.values()))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--raw-dir", default=str(ROOT / "data" / "raw"))
@@ -105,6 +116,9 @@ def main():
     build(con, str(Path(args.interim_dir) / "amfi_*.csv.gz"), params)
     for name in export(con, args.out):
         print("wrote", name)
+    report = Path(args.interim_dir) / "parse_report.csv"
+    if report.exists():
+        write_parse_summary(report, Path(args.out) / "r03_parse_summary.csv")
     con.close()
     return 0
 

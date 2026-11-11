@@ -1,0 +1,6 @@
+step_order,step_name,nav_rows,schemes
+1,Daily NAV lines parsed from AMFI reports,17345719,
+2,Valid NAV (a positive number),17168310,18432
+3,Plan and option identified,,14401
+4,Open-ended equity schemes (all plans),,2512
+5,"Direct plan, Growth option: the analysis universe",750440,605

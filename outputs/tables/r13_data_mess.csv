@@ -1,0 +1,7 @@
+issue,rows_affected,sample_value,handling,if_ignored
+NAV of zero,177391,NIPPON INDIA AGGRESSIVE HYBRID FUND -  SEGREGATED PORTFOLIO 2 - DIRECT Plan - IDCW Option; NIPPON INDIA AGGRESSIVE HYBRID FUND -  SEGREGATED PORTFOLIO 2 - DIRECT Plan - MONTHLY IDCW Option,Dropped before any return is formed,A zero NAV followed by a normal one is a false -100% day then an infinite gain
+NAV not a number,18,N.A. or blank in the NAV column,"Read as text, converted with try_cast, counted and dropped",A strict numeric load would fail on the first one
+Category labels that mean the same thing,25,Equity Scheme - Large Cap Fund vs Equity Schemes - Large Cap Fund,Mapped to one harmonised sub-category with a tested rule table,One category would be split in two and each half would fall under the minimum size
+Scheme names containing a comma,4,"PGIM India CRISIL IBX Gilt Index - Apr 2028 Fund - Direct Plan, Growth Option",Delimiter and quoting set explicitly when reading the files,Auto-detection guessed a different delimiter and shifted every column
+Plan or option could not be identified,4031,"Scheme names with neither Direct nor Regular, or an unusual option","Left out of the analysis universe, counted here",Dividend payouts would be read as losses against Growth NAVs
+Schemes that closed or merged before the end,8391,"Of 12,242 schemes with a NAV in 2018, 8,391 have none by the end of 2025","Kept in the history; vanished schemes are reported, not dropped",A list of today's funds would hide the funds that failed
