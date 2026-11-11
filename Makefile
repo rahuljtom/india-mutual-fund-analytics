@@ -1,7 +1,7 @@
 PY := .venv/bin/python
 export PYTHONPATH := src
 
-.PHONY: setup download build charts audit test lint check all
+.PHONY: setup download build charts site audit test lint check all
 
 setup:
 	python3 -m venv .venv
@@ -16,6 +16,9 @@ build:              # parse raw reports, build the DuckDB warehouse, export outp
 charts:
 	$(PY) -m mfa.charts
 
+site:               # build docs/index.html, the one-page decision write-up, from outputs/tables
+	$(PY) -m mfa.site
+
 audit:              # independent pandas recomputation of headline numbers
 	$(PY) scripts/audit_headlines.py
 
@@ -27,4 +30,4 @@ lint:
 
 check: lint test
 
-all: download build charts check audit
+all: download build charts site check audit

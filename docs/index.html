@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>India equity mutual funds: what matters</title>
+<meta name="description" content="Which choices change outcomes for an Indian equity fund investor, tested on 17 million AMFI prices.">
+<style>
+:root{color-scheme:light;--bg:#fcfcfb;--panel:#ffffff;--text:#0b0b0b;--text2:#52514e;--muted:#8a8883;--grid:#e6e5e1;--line:#d9d8d3;
+--s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--s4:#eda100;--s5:#e87ba4;--s6:#008300;--s7:#6250d6;--s8:#e34948;
+--seq0:#cde2fb;--seq1:#104281;--bad:#c2372f;--good:#0a7a4f;--soft:#f3f2ef}
+@media (prefers-color-scheme:dark){:root:where(:not([data-theme="light"])){color-scheme:dark;--bg:#141413;--panel:#1a1a19;--text:#f0efec;
+--text2:#c3c2b7;--muted:#8d8c85;--grid:#2c2c2a;--line:#3a3a37;--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--s6:#008300;
+--s7:#9085e9;--s8:#e66767;--seq0:#184f95;--seq1:#9ec5f4;--bad:#ee7a73;--good:#3dbb88;--soft:#222221}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#141413;--panel:#1a1a19;--text:#f0efec;--text2:#c3c2b7;--muted:#8d8c85;--grid:#2c2c2a;
+--line:#3a3a37;--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--s6:#008300;--s7:#9085e9;--s8:#e66767;--seq0:#184f95;
+--seq1:#9ec5f4;--bad:#ee7a73;--good:#3dbb88;--soft:#222221}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+header.hero{padding:44px 0 28px;border-bottom:1px solid var(--line)}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--text2);margin:0 0 10px}
+h1{font-size:clamp(26px,4.4vw,40px);line-height:1.15;margin:0 0 14px;letter-spacing:-.01em}
+h2{font-size:clamp(20px,3vw,26px);margin:0 0 6px;letter-spacing:-.005em}
+h3{font-size:17px;margin:0 0 4px}
+.lede{font-size:18px;color:var(--text2);max-width:760px;margin:0}
+section{padding:40px 0;border-bottom:1px solid var(--line)}
+section:last-of-type{border-bottom:0}
+.kicker{color:var(--text2);margin:0 0 22px;max-width:760px}
+.decision{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--s1);border-radius:10px;padding:22px 24px;margin-top:26px}
+.decision h2{margin-bottom:8px}
+.decision ol{margin:10px 0 0;padding-left:20px}.decision li{margin:7px 0}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-top:20px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.stat b{display:block;font-size:28px;line-height:1.1;letter-spacing:-.01em}
+.stat span{display:block;color:var(--text2);font-size:13px;margin-top:4px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px 18px 12px;margin:0 0 18px}
+.card .note{color:var(--text2);font-size:14px;margin:6px 0 0}
+.chart{width:100%;position:relative}.chart svg{display:block;width:100%;height:auto;overflow:visible}
+svg text{font:12px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;fill:var(--text2)}
+svg text.val{fill:var(--text)}svg text.strong{fill:var(--text);font-weight:600}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin:0 0 8px;font-size:13px;color:var(--text2)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.pipe{display:flex;flex-wrap:wrap;align-items:stretch;gap:0;margin:6px 0 4px}
+.pipe .step{flex:1 1 150px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;min-width:150px;margin:0 0 8px}
+.pipe .step b{display:block;font-size:13px;color:var(--text2);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.pipe .step strong{display:block;font-size:22px;margin:3px 0}
+.pipe .step span{font-size:13px;color:var(--text2)}
+.pipe .arrow{flex:0 0 22px;align-self:center;text-align:center;color:var(--muted);font-size:18px;margin:0 0 8px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;color:var(--text2);font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.tablewrap{overflow-x:auto}
+.mess td:first-child{font-weight:600;min-width:170px}.mess td:nth-child(2){font-variant-numeric:tabular-nums;white-space:nowrap}
+.tag{display:inline-block;font-size:12px;border-radius:999px;padding:2px 9px;background:var(--soft);color:var(--text2)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:760px){.chart{overflow-x:auto;-webkit-overflow-scrolling:touch}.chart svg{min-width:620px}.two{grid-template-columns:1fr}.pipe .arrow{display:none}.pipe .step{flex-basis:100%}}
+.limits li{margin:6px 0;color:var(--text2)}.limits li b{color:var(--text)}
+footer{padding:28px 0 60px;color:var(--text2);font-size:14px}
+a{color:var(--s1)}
+#tip{position:fixed;display:none;pointer-events:none;background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:8px;
+padding:8px 10px;font-size:13px;box-shadow:0 4px 18px rgba(0,0,0,.15);z-index:20;max-width:300px}
+#tip b{display:block;margin-bottom:2px}#tip .r{display:flex;justify-content:space-between;gap:14px}
+#tip .r i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px}
+</style>
+</head>
+<body>
+<div id="tip" role="tooltip"></div>
+
+<header class="hero"><div class="wrap">
+<p class="eyebrow">Case study · 17,345,719 daily fund prices from AMFI · India · 2018 to 2025</p>
+<h1>How should an Indian saver choose an equity mutual fund?</h1>
+<p class="lede">17 million raw price records, parsed from a semi-structured text report, loaded into a typed SQL warehouse and tested against what actually happened. The question: which choices change the outcome, and which are noise?</p>
+<div class="decision">
+<h2>Recommendation</h2>
+<p style="margin:0">Three rules, in order of how much the evidence supports them. Descriptive analysis of historical data, not investment advice.</p>
+<ol>
+<li><b>Buy the Direct plan.</b> The Regular plan of the same scheme returned a median <b>1.33 points a year less</b> across 365 matched pairs. A monthly SIP of ₹10,000 for 10 years at 12% gross loses about <b>₹1.5 lakh</b> (6.8%); over 20 years ₹13.6 lakh (14.8%).</li>
+<li><b>Match the fund to the time you can leave it.</b> Held for one year, equity funds lost money in <b>19.5%</b> of windows; for three years 0.4%, for five years under 0.1%. Money needed within three years does not belong here. Small-cap funds earned the most but fell the most (median deepest fall -48% against about -37% for most categories).</li>
+<li><b>Do not pay for a past-performance screen.</b> In a walk-forward test, picking last two years' top quartile beat the category by only +0.29 points a year (better in 3 of 5 years); the funds on the avoid list did +0.74 points <i>better</i>, and the low-volatility third -1.80 points.</li>
+</ol></div>
+<div class="stats">
+<div class="stat"><b>365</b><span>Direct/Regular pairs compared on the same portfolio</span></div>
+<div class="stat"><b>19.5% → 0.4%</b><span>windows with a loss, 1-year then 3-year holding</span></div>
+<div class="stat"><b>31.5%</b><span>of top-quartile funds stayed top-quartile (25% by chance)</span></div>
+<div class="stat"><b>8.8% vs 1.4%</b><span>of bottom vs top quartile funds vanished by 2025</span></div>
+</div>
+</div></header>
+
+<main class="wrap">
+<section id="mess"><h2>1 · The source was a text report, not a table</h2>
+<p class="kicker">AMFI publishes prices as a semi-structured text file with category and fund-house headings between the data lines. Turning it into something safe to analyse took a parser that tracks state line by line, a typed warehouse with constraints, and a decision on every kind of bad value. Only 605 of 18,432 schemes end up comparable.</p>
+<div class="pipe"><div class='step'><b>1 · Daily NAV lines parsed from AMFI reports</b><strong>17,345,719</strong><span>NAV rows. From 33 report files and 17,414,801 text lines; 81 lines the parser could not place, all reported</span></div><div class='arrow'>→</div><div class='step'><b>2 · Valid NAV (a positive number)</b><strong>17,168,310</strong><span>NAV rows · 18,432 schemes. 177,391 zero NAVs and 18 non-numeric values dropped, counted</span></div><div class='arrow'>→</div><div class='step'><b>3 · Plan and option identified</b><strong>14,401</strong><span>schemes. Read from scheme names; schemes whose plan cannot be told are left out</span></div><div class='arrow'>→</div><div class='step'><b>4 · Open-ended equity schemes (all plans)</b><strong>2,512</strong><span>schemes. 25 raw category labels mapped to 12 categories</span></div><div class='arrow'>→</div><div class='step'><b>5 · Direct plan, Growth option: the analysis universe</b><strong>750,440</strong><span>NAV rows · 605 schemes. Comparable on NAV alone: Direct plan, Growth option</span></div></div>
+<div class="card tablewrap"><h3>What was wrong, and what ignoring it would have done</h3><table class="mess"><thead><tr><th>Problem</th><th>Count</th><th>Example</th><th>What was done</th><th>If it had been ignored</th></tr></thead><tbody><tr><td>NAV of zero</td><td>177,391</td><td>NIPPON INDIA AGGRESSIVE HYBRID FUND -  SEGREGATED PORTFOLIO 2 - DIRECT Plan - IDCW Option</td><td>Dropped before any return is formed</td><td>A zero NAV followed by a normal one is a false -100% day then an infinite gain</td></tr><tr><td>NAV not a number</td><td>18</td><td>N.A. or blank in the NAV column</td><td>Read as text, converted with try_cast, counted and dropped</td><td>A strict numeric load would fail on the first one</td></tr><tr><td>Category labels that mean the same thing</td><td>25</td><td>Equity Scheme - Large Cap Fund vs Equity Schemes - Large Cap Fund</td><td>Mapped to one harmonised sub-category with a tested rule table</td><td>One category would be split in two and each half would fall under the minimum size</td></tr><tr><td>Scheme names containing a comma</td><td>4</td><td>PGIM India CRISIL IBX Gilt Index - Apr 2028 Fund - Direct Plan, Growth Option</td><td>Delimiter and quoting set explicitly when reading the files</td><td>Auto-detection guessed a different delimiter and shifted every column</td></tr><tr><td>Plan or option could not be identified</td><td>4,031</td><td>Scheme names with neither Direct nor Regular, or an unusual option</td><td>Left out of the analysis universe, counted here</td><td>Dividend payouts would be read as losses against Growth NAVs</td></tr><tr><td>Schemes that closed or merged before the end</td><td>8,391</td><td>Of 12,242 schemes with a NAV in 2018, 8,391 have none by the end of 2025</td><td>Kept in the history; vanished schemes are reported, not dropped</td><td>A list of today&#x27;s funds would hide the funds that failed</td></tr></tbody></table>
+<p class="note">Example of a zero NAV: NIPPON INDIA AGGRESSIVE HYBRID FUND -  SEGREGATED PORTFOLIO 2 - DIRECT Plan - IDCW Option, a segregated portfolio that carries no value. The same fund category appears under 25 raw labels that collapse to 12 categories.</p></div>
+</section>
+
+<section id="cost"><h2>2 · The one edge that shows up everywhere: cost</h2>
+<p class="kicker">Direct and Regular plans hold the same portfolio; the Regular NAV is lower because of the commission built into its costs. Gap measured on 365 matched pairs: median 1.33 points a year (range 0.07 to 2.35). The rupee figures below use that gap with the gross return as a scenario, not a forecast.</p>
+<div class="card"><h3>Value lost by holding the Regular plan: ₹10,000 a month, in lakh rupees</h3><div class="legend" id="lg-cost"></div><div class="chart" id="c-cost"></div>
+<p class="note">Costs compound: the loss share roughly doubles from 6.8% at 10 years to 14.8% at 20 years.</p></div>
+<div class="card tablewrap"><h3>10-year SIP, by gross return assumption</h3><table><thead><tr><th class="num">Direct plan returns</th><th class="num">Direct plan corpus</th><th class="num">Regular plan corpus</th><th class="num">Lost to Regular</th></tr></thead><tbody><tr><td class='num'>8% a year</td><td class='num'>₹18.1 lakh</td><td class='num'>₹16.9 lakh</td><td class='num'><b>₹1.2 lakh</b> (6.7%)</td></tr><tr><td class='num'>10% a year</td><td class='num'>₹20.1 lakh</td><td class='num'>₹18.8 lakh</td><td class='num'><b>₹1.4 lakh</b> (6.8%)</td></tr><tr><td class='num'>12% a year</td><td class='num'>₹22.4 lakh</td><td class='num'>₹20.9 lakh</td><td class='num'><b>₹1.5 lakh</b> (6.8%)</td></tr><tr><td class='num'>15% a year</td><td class='num'>₹26.3 lakh</td><td class='num'>₹24.5 lakh</td><td class='num'><b>₹1.8 lakh</b> (6.9%)</td></tr></tbody></table></div>
+</section>
+
+<section id="risk"><h2>3 · How long you can wait matters more than which category</h2>
+<p class="kicker">Every month-end start and finish across the history, by holding period. Short holds can lose; long holds almost never did. This period (2018 to 2025) includes the March 2020 crash and a strong 2021 to 2025, so the levels flatter equities.</p>
+<div class="card"><h3>Annualised return by holding period: 10th to 90th percentile, median marked</h3><div class="chart" id="c-horizon"></div>
+<p class="note">Windows that lost money: 19.5% at one year, 0.4% at three, under 0.1% at five. Windows overlap and funds in a category hold similar stocks, so these are not independent observations.</p></div>
+<div class="card"><h3>Three-year outcomes by category: 10th to 90th percentile, median marked</h3><div class="chart" id="c-three"></div></div>
+<div class="card"><h3>Higher returns came with deeper falls</h3><div class="chart" id="c-scatter"></div>
+<p class="note">Median 3-year return against median deepest fall since 2018. Small-cap (orange) sits alone at the high-return, high-loss corner; most categories bunch together near a 37% fall.</p></div>
+</section>
+
+<section id="pick"><h2>4 · Does a screen for "good" funds work?</h2>
+<p class="kicker">Walk-forward test: on 31 December each year from 2020 to 2024, use only the trailing 24 months to pick funds within each category, then measure the next 12 months against the average fund in that category. Funds that vanished before the end are counted separately, and the excess is measured on survivors, which can only flatter the rules.</p>
+<div class="card"><h3>Next-year return minus the category average, by selection rule and year (percentage points)</h3><div class="legend" id="lg-rules"></div><div class="chart" id="c-backtest"></div>
+<p class="note">Every rule changes sign across the 5 test years. The weakest, the lowest-volatility third, is below zero in 4 of 5 years. No rule is reliably above zero.</p></div>
+<div class="card tablewrap"><table><thead><tr><th>Selection rule</th><th class="num">Picks</th><th class="num">Vanished</th><th class="num">Average excess</th><th class="num">Picks beating category</th><th class="num">Years positive</th></tr></thead><tbody><tr><td>Top quartile of trailing 2-year return</td><td class='num'>415</td><td class='num'>1.2%</td><td class='num'>+0.29 pp</td><td class='num'>50%</td><td class='num'>3 of 5</td></tr><tr><td>Everything except the bottom quartile</td><td class='num'>1,216</td><td class='num'>2.5%</td><td class='num'>-0.23 pp</td><td class='num'>47%</td><td class='num'>2 of 5</td></tr><tr><td>Bottom quartile (the avoid list)</td><td class='num'>374</td><td class='num'>2.7%</td><td class='num'>+0.74 pp</td><td class='num'>52%</td><td class='num'>3 of 5</td></tr><tr><td>Lowest-volatility third</td><td class='num'>546</td><td class='num'>3.7%</td><td class='num'>-1.80 pp</td><td class='num'>40%</td><td class='num'>1 of 5</td></tr></tbody></table></div>
+<div class="card"><h3>Where last period's best and worst funds ended up (share of surviving first-quartile funds)</h3><div class="chart" id="c-heat"></div>
+<p class="note">Of top-quartile funds, 31.5% were top-quartile again (25% by chance; one-sided p = 0.13); of bottom-quartile funds, 38.7% stayed at the bottom (one-sided p = 0.01). Weak funds persist a little; strong funds do not. 8.8% of bottom-quartile funds had no price by the end of 2025 against 1.4% of top-quartile ones, which fund tables built from today's funds would hide.</p></div>
+</section>
+
+<section id="limits"><h2>5 · What would change this recommendation</h2>
+<ul class="limits">
+<li><b>One market regime.</b> Eight years with one crash and a strong recovery. A multi-year bear market would lengthen the holding period needed to avoid a loss.</li>
+<li><b>Costs are inferred from NAVs.</b> The Direct–Regular gap is mostly the cost difference, not only; taxes, exit loads and fund size are not studied.</li>
+<li><b>The backtest has five test years</b> and overlapping funds. It shows no reliable edge in these data; it cannot prove none exists.</li>
+<li><b>Categories change.</b> A scheme that changed category keeps its latest one for its whole history.</li>
+<li><b>Source terms.</b> AMFI's terms of use for this data have not been reviewed here; check them before reuse.</li>
+</ul></section>
+</main>
+<footer><div class="wrap">Data: AMFI historical NAV report (portal.amfiindia.com), pulled 7 November 2026 for 1 January 2018 to 31 December 2025. Code, SQL, tests and method notes are in the repository. Re-run with <code>make all site</code>. Not investment advice.</div></footer>
+
+<script>
+const DATA = {"horizon":[{"label":"1-year holding period","lo":-5.5,"mid":12.5,"hi":53.9,"tip":"<b>1-year holding period, all equity categories</b>29,768 windows from 548 schemes<br>10th to 90th percentile: -5.5% to 53.9% a year (median 12.5%)<br>windows that lost money: 19.5%"},{"label":"3-year holding period","lo":11.5,"mid":19.5,"hi":30.0,"tip":"<b>3-year holding period, all equity categories</b>18,396 windows from 413 schemes<br>10th to 90th percentile: 11.5% to 30.0% a year (median 19.5%)<br>windows that lost money: 0.4%"},{"label":"5-year holding period","lo":11.7,"mid":20.1,"hi":29.7,"tip":"<b>5-year holding period, all equity categories</b>9,665 windows from 313 schemes<br>10th to 90th percentile: 11.7% to 29.7% a year (median 20.1%)<br>windows that lost money: under 0.1%"}],"three":[{"label":"Small Cap Fund","lo":15.5,"mid":26.8,"hi":39.7,"tip":"<b>Small Cap Fund</b>3-year windows: 1,252 from 27 schemes<br>10th to 90th percentile 15.5% to 39.7% a year<br>median 26.8%, windows with a loss 0.6%"},{"label":"Mid Cap Fund","lo":14.9,"mid":24.0,"hi":33.2,"tip":"<b>Mid Cap Fund</b>3-year windows: 1,403 from 33 schemes<br>10th to 90th percentile 14.9% to 33.2% a year<br>median 24.0%, windows with a loss 0.1%"},{"label":"Multi Cap Fund","lo":12.9,"mid":21.3,"hi":31.6,"tip":"<b>Multi Cap Fund</b>3-year windows: 612 from 20 schemes<br>10th to 90th percentile 12.9% to 31.6% a year<br>median 21.3%, windows with a loss 0.3%"},{"label":"Dividend Yield Fund","lo":13.8,"mid":20.7,"hi":29.2,"tip":"<b>Dividend Yield Fund</b>3-year windows: 329 from 9 schemes<br>10th to 90th percentile 13.8% to 29.2% a year<br>median 20.7%, windows with a loss 0.3%"},{"label":"Large & Mid Cap Fund","lo":13.6,"mid":20.4,"hi":27.5,"tip":"<b>Large &amp; Mid Cap Fund</b>3-year windows: 1,531 from 29 schemes<br>10th to 90th percentile 13.6% to 27.5% a year<br>median 20.4%, windows with a loss 0.0%"},{"label":"Value Fund","lo":11.8,"mid":19.9,"hi":28.2,"tip":"<b>Value Fund</b>3-year windows: 907 from 21 schemes<br>10th to 90th percentile 11.8% to 28.2% a year<br>median 19.9%, windows with a loss 0.6%"},{"label":"Sectoral/ Thematic","lo":9.8,"mid":19.4,"hi":31.8,"tip":"<b>Sectoral/ Thematic</b>3-year windows: 5,825 from 130 schemes<br>10th to 90th percentile 9.8% to 31.8% a year<br>median 19.4%, windows with a loss 0.9%"},{"label":"ELSS","lo":11.2,"mid":18.4,"hi":26.2,"tip":"<b>ELSS</b>3-year windows: 2,017 from 43 schemes<br>10th to 90th percentile 11.2% to 26.2% a year<br>median 18.4%, windows with a loss 0.1%"},{"label":"Flexi Cap Fund","lo":11.8,"mid":18.2,"hi":26.4,"tip":"<b>Flexi Cap Fund</b>3-year windows: 1,495 from 32 schemes<br>10th to 90th percentile 11.8% to 26.4% a year<br>median 18.2%, windows with a loss 0.1%"},{"label":"Focused Fund","lo":11.2,"mid":18.2,"hi":25.4,"tip":"<b>Focused Fund</b>3-year windows: 1,173 from 30 schemes<br>10th to 90th percentile 11.2% to 25.4% a year<br>median 18.2%, windows with a loss 0.1%"},{"label":"Large Cap Fund","lo":11.6,"mid":16.4,"hi":22.2,"tip":"<b>Large Cap Fund</b>3-year windows: 1,672 from 36 schemes<br>10th to 90th percentile 11.6% to 22.2% a year<br>median 16.4%, windows with a loss 0.0%"}],"scatter":[{"label":"Flexi Cap","x":-36.3,"y":17.92,"color":"var(--s1)","tip":"<b>Flexi Cap Fund</b>median 3-year return 17.9% a year<br>median deepest fall -36.3%<br>return per unit of volatility 1.45"},{"label":"Mid Cap","x":-36.4,"y":23.37,"color":"var(--s1)","tip":"<b>Mid Cap Fund</b>median 3-year return 23.4% a year<br>median deepest fall -36.4%<br>return per unit of volatility 1.59"},{"label":"Focused","x":-36.7,"y":18.26,"color":"var(--s1)","tip":"<b>Focused Fund</b>median 3-year return 18.3% a year<br>median deepest fall -36.7%<br>return per unit of volatility 1.44"},{"label":"Large Cap","x":-36.7,"y":16.54,"color":"var(--s1)","tip":"<b>Large Cap Fund</b>median 3-year return 16.5% a year<br>median deepest fall -36.7%<br>return per unit of volatility 1.40"},{"label":"ELSS","x":-36.8,"y":17.46,"color":"var(--s1)","tip":"<b>ELSS</b>median 3-year return 17.5% a year<br>median deepest fall -36.8%<br>return per unit of volatility 1.40"},{"label":"Large & Mid Cap","x":-37.4,"y":20.15,"color":"var(--s1)","tip":"<b>Large &amp; Mid Cap Fund</b>median 3-year return 20.1% a year<br>median deepest fall -37.4%<br>return per unit of volatility 1.49"},{"label":"Sectoral/ Thematic","x":-37.5,"y":19.2,"color":"var(--s1)","tip":"<b>Sectoral/ Thematic</b>median 3-year return 19.2% a year<br>median deepest fall -37.5%<br>return per unit of volatility 1.44"},{"label":"Value","x":-40.7,"y":20.84,"color":"var(--s1)","tip":"<b>Value Fund</b>median 3-year return 20.8% a year<br>median deepest fall -40.7%<br>return per unit of volatility 1.60"},{"label":"Small Cap","x":-48.4,"y":20.5,"color":"var(--s2)","tip":"<b>Small Cap Fund</b>median 3-year return 20.5% a year<br>median deepest fall -48.4%<br>return per unit of volatility 1.36"}],"costcats":["8% gross","10% gross","12% gross","15% gross"],"cost":[{"name":"10 years","color":"var(--s1)","vals":[1.22083,1.36679,1.52954,1.809],"pct":[6.7,6.8,6.8,6.9]},{"name":"20 years","color":"var(--s2)","vals":[8.11057,10.49079,13.58016,20.0087],"pct":[14.2,14.5,14.8,15.1]}],"years":["2020","2021","2022","2023","2024"],"rules":[{"name":"Top quartile of trailing 2-year return","color":"var(--s1)","vals":[1.34,-4.12,4.34,2.39,-2.16]},{"name":"Everything except the bottom quartile","color":"var(--s2)","vals":[-0.49,-0.96,0.59,0.68,-0.94]},{"name":"Bottom quartile (the avoid list)","color":"var(--s3)","vals":[1.57,3.03,-1.96,-2.22,3.07]},{"name":"Lowest-volatility third","color":"var(--s4)","vals":[-4.15,-3.14,-1.7,-1.67,0.77]}],"heat":[[31.5,23.3,30.1,15.1],[36.1,30.6,16.7,16.7],[26.6,23.4,21.9,28.1],[9.7,21.0,30.6,38.7]],"heattips":[[23,17,22,11],[26,22,12,12],[17,15,14,18],[6,13,19,24]]};
+
+const NS='http://www.w3.org/2000/svg';
+const $=(s,r=document)=>r.querySelector(s);
+function svg(tag,attrs,parent){const e=document.createElementNS(NS,tag);const st=[];
+ for(const k in (attrs||{})){const v=attrs[k];if(k==='fill'||k==='stroke'||k==='style')st.push(k==='style'?v:k+':'+v);else e.setAttribute(k,v);}
+ if(st.length)e.setAttribute('style',st.join(';'));if(parent)parent.appendChild(e);return e;}
+function text(parent,x,y,s,attrs){const t=svg('text',Object.assign({x,y},attrs||{}),parent);t.textContent=s;return t;}
+const tipEl=document.getElementById('tip');
+function showTip(ev,html){tipEl.innerHTML=html;tipEl.style.display='block';const r=tipEl.getBoundingClientRect();
+ let x=ev.clientX+14,y=ev.clientY+14;if(x+r.width>innerWidth-8)x=ev.clientX-r.width-14;if(y+r.height>innerHeight-8)y=ev.clientY-r.height-14;
+ tipEl.style.left=Math.max(4,x)+'px';tipEl.style.top=Math.max(4,y)+'px';}
+function hideTip(){tipEl.style.display='none';}
+function lin(d0,d1,r0,r1){return v=>r0+(v-d0)*(r1-r0)/((d1-d0)||1);}
+function niceMax(v){const e=Math.pow(10,Math.floor(Math.log10(v||1)));for(const m of [1,1.5,2,2.5,3,4,5,6,8,10]){if(m*e>=v)return m*e;}return 10*e;}
+function ticks(lo,hi,n){const span=hi-lo;const raw=span/n;const e=Math.pow(10,Math.floor(Math.log10(raw)));
+ let st=e;for(const m of [1,2,2.5,5,10]){if(m*e>=raw){st=m*e;break;}}const out=[];for(let v=Math.ceil(lo/st)*st;v<=hi+1e-9;v+=st)out.push(+v.toFixed(6));return out;}
+const fmt={int:v=>Math.round(v).toLocaleString('en-US'),pct:v=>(Math.round(v*10)/10)+'%',pct0:v=>Math.round(v)+'%',pp:v=>(v>0?'+':'')+(Math.round(v*100)/100)+' pp',
+ lakh:v=>'₹'+(v/100000).toFixed(1)+' lakh',k:v=>(v/1000).toFixed(0)+'k'};
+function mk(container,w,h){const el=typeof container==='string'?$(container):container;el.innerHTML='';
+ const s=svg('svg',{viewBox:'0 0 '+w+' '+h,role:'img'},el);return s;}
+function legend(container,items){const el=typeof container==='string'?$(container):container;const d=document.createElement('div');d.className='legend';
+ d.innerHTML=items.map(i=>'<span><i style="background:'+i.color+'"></i>'+i.name+'</span>').join('');el.parentNode.insertBefore(d,el);}
+function axisY(s,sc,tk,x0,x1,f){tk.forEach(t=>{const y=sc(t);svg('line',{x1:x0,x2:x1,y1:y,y2:y,stroke:'var(--grid)'},s);text(s,x0-8,y+4,f(t),{'text-anchor':'end'});});}
+
+/* line chart: o={series:[{name,color,pts:[[x,y],...]}], x:[min,max], y:[min,max], xt:[ticks], yt:[ticks], yf, xf, xlab, ylab, step, h} */
+function lineChart(sel,o){const W=760,H=o.h||340,m={l:56,r:136,t:30,b:44};const s=mk(sel,W,H);
+ const sx=lin(o.x[0],o.x[1],m.l,W-m.r),sy=lin(o.y[0],o.y[1],H-m.b,m.t);
+ axisY(s,sy,o.yt||ticks(o.y[0],o.y[1],5),m.l,W-m.r,o.yf||String);
+ (o.xt||ticks(o.x[0],o.x[1],6)).forEach(t=>{text(s,sx(t),H-m.b+18,(o.xf||String)(t),{'text-anchor':'middle'});});
+ svg('line',{x1:m.l,x2:W-m.r,y1:H-m.b,y2:H-m.b,stroke:'var(--muted)'},s);
+ if(o.xlab)text(s,(m.l+W-m.r)/2,H-6,o.xlab,{'text-anchor':'middle'});
+ if(o.ylab)text(s,m.l,12,o.ylab,{});
+ o.series.forEach(se=>{let d='';se.pts.forEach((p,i)=>{const X=sx(p[0]),Y=sy(p[1]);
+  d+=i===0?'M'+X+','+Y:(o.step?'H'+X+'V'+Y:'L'+X+','+Y);});
+  svg('path',{d,fill:'none',stroke:se.color,'stroke-width':2,'stroke-linejoin':'round'},s);});
+ const lab=o.series.map(se=>({se,y:sy(se.pts[se.pts.length-1][1])})).sort((a,b)=>a.y-b.y);
+ for(let i=1;i<lab.length;i++){if(lab[i].y-lab[i-1].y<14)lab[i].y=lab[i-1].y+14;}
+ const floor=H-m.b-2;if(lab.length&&lab[lab.length-1].y>floor){lab[lab.length-1].y=floor;for(let i=lab.length-2;i>=0;i--){if(lab[i].y>lab[i+1].y-14)lab[i].y=lab[i+1].y-14;}}
+ lab.forEach(l=>{text(s,W-m.r+8,l.y+4,l.se.name,{class:'strong'});});
+ const g=svg('g',{},s);const cur=svg('line',{y1:m.t,y2:H-m.b,stroke:'var(--muted)','stroke-dasharray':'3 3',style:'display:none'},g);
+ const dots=o.series.map(se=>svg('circle',{r:4,fill:se.color,stroke:'var(--panel)','stroke-width':2,style:'display:none'},g));
+ const ov=svg('rect',{x:m.l,y:m.t,width:W-m.l-m.r,height:H-m.t-m.b,fill:'transparent'},s);
+ ov.addEventListener('mousemove',ev=>{const r=s.getBoundingClientRect();const px=(ev.clientX-r.left)*W/r.width;
+  let xv=o.x[0]+(px-m.l)*(o.x[1]-o.x[0])/(W-m.l-m.r);let best=null;
+  o.series[0].pts.forEach(p=>{if(best===null||Math.abs(p[0]-xv)<Math.abs(best-xv))best=p[0];});
+  cur.setAttribute('x1',sx(best));cur.setAttribute('x2',sx(best));cur.style.display='';
+  let html='<b>'+(o.xf||String)(best)+(o.xunit||'')+'</b>';
+  o.series.forEach((se,i)=>{const p=se.pts.find(q=>q[0]===best);if(!p){dots[i].style.display='none';return;}
+   dots[i].setAttribute('cx',sx(p[0]));dots[i].setAttribute('cy',sy(p[1]));dots[i].style.display='';
+   html+='<div class="r"><span><i style="background:'+se.color+'"></i>'+se.name+'</span><span>'+(o.yf||String)(p[1])+'</span></div>';});
+  showTip(ev,html);});
+ ov.addEventListener('mouseleave',()=>{hideTip();cur.style.display='none';dots.forEach(d=>d.style.display='none');});}
+
+/* horizontal bars: o={rows:[{label,value,tip,color,sub}], max, vf, lw, color} */
+function hbar(sel,o){const rows=o.rows,lw=o.lw||210,rh=o.rh||26,W=760,m={t:6,r:70,b:22},H=m.t+rows.length*rh+m.b;const s=mk(sel,W,H);
+ const mx=o.max||niceMax(Math.max(...rows.map(r=>r.value))),sx=lin(0,mx,lw,W-m.r);
+ ticks(0,mx,5).forEach(t=>{svg('line',{x1:sx(t),x2:sx(t),y1:m.t,y2:H-m.b,stroke:'var(--grid)'},s);text(s,sx(t),H-6,(o.tf||o.vf||String)(t),{'text-anchor':'middle'});});
+ rows.forEach((r,i)=>{const y=m.t+i*rh;text(s,lw-8,y+rh/2+4,r.label,{'text-anchor':'end',class:r.bold?'strong':''});
+  const b=svg('rect',{x:lw,y:y+4,width:Math.max(1,sx(r.value)-lw),height:rh-8,rx:3,fill:r.color||o.color||'var(--s1)'},s);
+  text(s,sx(r.value)+6,y+rh/2+4,(o.vf||String)(r.value)+(r.sub?'  '+r.sub:''),{class:'val'});
+  const hit=svg('rect',{x:0,y:y,width:W,height:rh,fill:'transparent'},s);
+  hit.addEventListener('mousemove',ev=>showTip(ev,r.tip||('<b>'+r.label+'</b>'+(o.vf||String)(r.value))));hit.addEventListener('mouseleave',hideTip);});}
+
+/* range rows (low-high with a median tick): o={rows:[{label,lo,mid,hi,tip}], x:[min,max], xf} */
+function rangeChart(sel,o){const rows=o.rows,lw=o.lw||170,rh=28,W=760,m={t:6,r:30,b:40},H=m.t+rows.length*rh+m.b;const s=mk(sel,W,H);
+ const sx=lin(o.x[0],o.x[1],lw,W-m.r);
+ ticks(o.x[0],o.x[1],6).forEach(t=>{svg('line',{x1:sx(t),x2:sx(t),y1:m.t,y2:H-m.b,stroke:t===0?'var(--muted)':'var(--grid)'},s);text(s,sx(t),H-m.b+16,o.xf(t),{'text-anchor':'middle'});});
+ if(o.xlab)text(s,(lw+W-m.r)/2,H-4,o.xlab,{'text-anchor':'middle'});
+ rows.forEach((r,i)=>{const y=m.t+i*rh;text(s,lw-8,y+rh/2+4,r.label,{'text-anchor':'end'});
+  svg('rect',{x:sx(r.lo),y:y+7,width:Math.max(2,sx(r.hi)-sx(r.lo)),height:rh-14,rx:4,fill:o.color||'var(--s1)',style:'opacity:.5'},s);
+  svg('rect',{x:sx(r.mid)-2,y:y+4,width:4,height:rh-8,rx:2,fill:o.color||'var(--s1)'},s);
+  text(s,sx(r.hi)+8,y+rh/2+4,o.xf(r.lo)+' to '+o.xf(r.hi)+'  (median '+o.xf(r.mid)+')',{class:'val'});
+  const hit=svg('rect',{x:0,y:y,width:W,height:rh,fill:'transparent'},s);
+  hit.addEventListener('mousemove',ev=>showTip(ev,r.tip));hit.addEventListener('mouseleave',hideTip);});}
+
+/* scatter with direct labels: o={pts:[{label,x,y,tip,dx,dy}], x:[..], y:[..], xf, yf, xlab, ylab} */
+function scatter(sel,o){const W=760,H=o.h||380,m={l:60,r:30,t:30,b:46};const s=mk(sel,W,H);
+ const sx=lin(o.x[0],o.x[1],m.l,W-m.r),sy=lin(o.y[0],o.y[1],H-m.b,m.t);
+ axisY(s,sy,ticks(o.y[0],o.y[1],5),m.l,W-m.r,o.yf);
+ ticks(o.x[0],o.x[1],6).forEach(t=>{svg('line',{x1:sx(t),x2:sx(t),y1:m.t,y2:H-m.b,stroke:'var(--grid)'},s);text(s,sx(t),H-m.b+18,o.xf(t),{'text-anchor':'middle'});});
+ text(s,(m.l+W-m.r)/2,H-6,o.xlab,{'text-anchor':'middle'});text(s,m.l,12,o.ylab,{});
+ const lp=o.pts.map(p=>({p,x:sx(p.x)+(p.dx===undefined?10:p.dx),y:sy(p.y)+(p.dy===undefined?4:p.dy)})).sort((a,b)=>a.y-b.y);
+ for(let i=1;i<lp.length;i++){for(let j=0;j<i;j++){if(Math.abs(lp[i].y-lp[j].y)<13&&Math.abs(lp[i].x-lp[j].x)<120)lp[i].y=lp[j].y+13;}}
+ const ly=new Map(lp.map(l=>[l.p,l.y]));
+ o.pts.forEach(p=>{const c=svg('circle',{cx:sx(p.x),cy:sy(p.y),r:6.5,fill:p.color||'var(--s1)',stroke:'var(--panel)','stroke-width':2},s);
+  text(s,sx(p.x)+(p.dx===undefined?10:p.dx),ly.get(p),p.label,{class:'val','text-anchor':p.anchor||'start'});
+  c.addEventListener('mousemove',ev=>showTip(ev,p.tip));c.addEventListener('mouseleave',hideTip);});}
+
+/* heatmap: o={rows:[labels], cols:[labels], vals:[[..]], vf, rowlab, collab, tip(r,c)} */
+function heat(sel,o){const cw=118,ch=46,W=Math.max(560,170+o.cols.length*cw),H=44+o.rows.length*ch+30;const s=mk(sel,W,H);
+ const mx=Math.max(...o.vals.flat());
+ const mix=t=>{const a=getComputedStyle(document.documentElement);return 'color-mix(in srgb, var(--seq1) '+Math.round(t*100)+'%, var(--seq0))';};
+ o.cols.forEach((c,j)=>text(s,170+j*cw+cw/2,22,c,{'text-anchor':'middle'}));
+ text(s,170+o.cols.length*cw/2,H-4,o.collab,{'text-anchor':'middle'});
+ o.rows.forEach((r,i)=>{text(s,160,44+i*ch+ch/2+4,r,{'text-anchor':'end'});
+  o.vals[i].forEach((v,j)=>{const t=v/mx;const c=svg('rect',{x:170+j*cw+2,y:44+i*ch+2,width:cw-4,height:ch-4,rx:5,fill:mix(t)},s);
+   text(s,170+j*cw+cw/2,44+i*ch+ch/2+4,o.vf(v),{'text-anchor':'middle',class:'strong',style:'fill:'+(t>.55?'#fff':'var(--text)')});
+   c.addEventListener('mousemove',ev=>showTip(ev,o.tip(i,j)));c.addEventListener('mouseleave',hideTip);});});
+ text(s,10,24,o.rowlab,{});}
+
+/* grouped vertical bars with a zero line: o={cats:[..], series:[{name,color,vals:[..]}], y:[lo,hi], yf, ylab, tipf} */
+function groupedBar(sel,o){const W=760,H=o.h||330,m={l:56,r:20,t:30,b:36};const s=mk(sel,W,H);
+ const sy=lin(o.y[0],o.y[1],H-m.b,m.t);axisY(s,sy,ticks(o.y[0],o.y[1],6),m.l,W-m.r,o.yf);
+ svg('line',{x1:m.l,x2:W-m.r,y1:sy(0),y2:sy(0),stroke:'var(--muted)'},s);
+ const gw=(W-m.l-m.r)/o.cats.length,n=o.series.length,bw=Math.min(26,(gw-18)/n);
+ o.cats.forEach((c,i)=>{const x0=m.l+i*gw+(gw-bw*n-2*(n-1))/2;text(s,m.l+i*gw+gw/2,H-m.b+18,c,{'text-anchor':'middle'});
+  o.series.forEach((se,k)=>{const v=se.vals[i];if(v===null||v===undefined)return;const y=sy(Math.max(v,0)),h=Math.abs(sy(v)-sy(0));
+   const b=svg('rect',{x:x0+k*(bw+2),y:y,width:bw,height:Math.max(1,h),rx:3,fill:se.color},s);
+   if(o.vlab)text(s,x0+k*(bw+2)+bw/2,v>=0?y-5:y+h+13,o.vlab(v),{'text-anchor':'middle',class:'val'});
+   b.addEventListener('mousemove',ev=>showTip(ev,o.tipf(c,se,v)));b.addEventListener('mouseleave',hideTip);});});
+ if(o.ylab)text(s,m.l,12,o.ylab,{});}
+
+/* dot with margin (point estimate and 95% band) per row: o={rows:[{label,v,m,tip}], x:[..], xf} */
+function marginChart(sel,o){const rows=o.rows,lw=150,rh=34,W=760,m={t:8,r:30,b:42},H=m.t+rows.length*rh+m.b;const s=mk(sel,W,H);
+ const sx=lin(o.x[0],o.x[1],lw,W-m.r);
+ ticks(o.x[0],o.x[1],6).forEach(t=>{svg('line',{x1:sx(t),x2:sx(t),y1:m.t,y2:H-m.b,stroke:t===0?'var(--text2)':'var(--grid)'},s);text(s,sx(t),H-m.b+16,o.xf(t),{'text-anchor':'middle'});});
+ text(s,(lw+W-m.r)/2,H-4,o.xlab,{'text-anchor':'middle'});
+ rows.forEach((r,i)=>{const y=m.t+i*rh+rh/2;text(s,lw-8,y+4,r.label,{'text-anchor':'end'});
+  svg('line',{x1:sx(r.v-r.m),x2:sx(r.v+r.m),y1:y,y2:y,stroke:r.color||'var(--s1)','stroke-width':2.5},s);
+  const c=svg('circle',{cx:sx(r.v),cy:y,r:6,fill:r.color||'var(--s1)',stroke:'var(--panel)','stroke-width':2},s);
+  const hit=svg('rect',{x:0,y:y-rh/2,width:W,height:rh,fill:'transparent'},s);
+  hit.addEventListener('mousemove',ev=>showTip(ev,r.tip));hit.addEventListener('mouseleave',hideTip);});}
+
+
+const D = DATA;
+rangeChart('#c-horizon',{rows:D.horizon,x:[-20,90],xf:v=>v+'%',xlab:'Annualised return (% a year)',lw:170});
+rangeChart('#c-three',{rows:D.three,x:[0,70],xf:v=>v+'%',xlab:'Annualised 3-year return (% a year)',lw:190,color:'var(--s1)'});
+scatter('#c-scatter',{pts:D.scatter,x:[-52,-34],y:[14,26],xf:v=>v+'%',yf:v=>v+'%',xlab:'Median deepest fall since 2018 (%)',ylab:'Median 3-year return (% a year)'});
+document.getElementById('lg-cost').innerHTML=D.cost.map(s=>'<span><i style="background:'+s.color+'"></i>'+s.name+' of monthly investing</span>').join('');
+groupedBar('#c-cost',{cats:D.costcats,series:D.cost,y:[0,25],vlab:v=>v.toFixed(1),yf:v=>v+' lakh',ylab:'Lost to the Regular plan (₹ lakh)',tipf:(c,s,v)=>'<b>'+c+', '+s.name+'</b>₹'+v.toFixed(1)+' lakh lost'});
+const lg=document.getElementById('lg-rules');lg.innerHTML=D.rules.map(s=>'<span><i style="background:'+s.color+'"></i>'+s.name+'</span>').join('');
+groupedBar('#c-backtest',{cats:D.years,series:D.rules,y:[-6,6],vlab:v=>(v>0?'+':'')+v.toFixed(1),yf:v=>(v>0?'+':'')+v,ylab:'Percentage points',tipf:(c,s,v)=>'<b>Formed '+c+': '+s.name+'</b>'+(v>0?'+':'')+v.toFixed(2)+' pp vs category average'});
+heat('#c-heat',{rows:['Top quartile','Second','Third','Bottom quartile'],cols:['Top quartile','Second','Third','Bottom quartile'],vals:D.heat,vf:v=>v.toFixed(1)+'%',
+ rowlab:'First period',collab:'Next period',tip:(i,j)=>'<b>'+D.heattips[i][j]+' funds</b>'+D.heat[i][j].toFixed(1)+'% of surviving funds that started in this row'});
+
+</script>
+</body>
+</html>
