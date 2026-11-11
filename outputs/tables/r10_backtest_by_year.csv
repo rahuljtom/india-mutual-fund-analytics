@@ -1,0 +1,21 @@
+selection_rule,formation_year,picks,survivors,avg_excess_pp,avg_forward_return_pct
+Top quartile of trailing 2-year return,2020,74,74,1.34,38.77
+Top quartile of trailing 2-year return,2021,81,77,-4.12,-0.34
+Top quartile of trailing 2-year return,2022,80,79,4.34,37.05
+Top quartile of trailing 2-year return,2023,84,84,2.39,24.96
+Top quartile of trailing 2-year return,2024,96,96,-2.16,2.92
+Everything except the bottom quartile,2020,217,217,-0.49,37.04
+Everything except the bottom quartile,2021,238,215,-0.96,2.77
+Everything except the bottom quartile,2022,235,227,0.59,33.3
+Everything except the bottom quartile,2023,248,248,0.68,23.24
+Everything except the bottom quartile,2024,278,278,-0.94,4.23
+Bottom quartile (the avoid list),2020,67,67,1.57,38.8
+Bottom quartile (the avoid list),2021,73,68,3.03,6.77
+Bottom quartile (the avoid list),2022,72,68,-1.96,30.47
+Bottom quartile (the avoid list),2023,76,76,-2.22,20.2
+Bottom quartile (the avoid list),2024,86,85,3.07,8.2
+Lowest-volatility third,2020,97,97,-4.15,33.5
+Lowest-volatility third,2021,106,90,-3.14,0.56
+Lowest-volatility third,2022,106,102,-1.7,30.84
+Lowest-volatility third,2023,111,111,-1.67,20.86
+Lowest-volatility third,2024,126,126,0.77,5.9

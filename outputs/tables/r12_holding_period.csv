@@ -1,0 +1,36 @@
+horizon_years,sub_category,windows,schemes,p10_annual_pct,median_annual_pct,p90_annual_pct,pct_windows_with_loss
+1.0,ALL EQUITY CATEGORIES,29768,548,-5.5,12.5,53.9,19.5
+1.0,Small Cap Fund,1988,34,-9.0,15.6,76.0,24.4
+1.0,Mid Cap Fund,2229,36,-5.5,14.3,62.7,17.99
+1.0,Sectoral/ Thematic,9730,214,-6.9,13.2,54.6,21.23
+1.0,Focused Fund,1942,33,-4.0,12.5,48.1,16.74
+1.0,Multi Cap Fund,1273,34,-4.1,12.5,53.5,17.2
+1.0,Large & Mid Cap Fund,2268,34,-3.9,12.4,54.3,17.28
+1.0,Flexi Cap Fund,2383,39,-3.9,12.2,48.1,18.21
+1.0,Dividend Yield Fund,589,12,-5.8,11.6,52.8,19.02
+1.0,ELSS,3111,47,-5.0,11.1,49.7,19.35
+1.0,Value Fund,1448,23,-6.8,10.9,54.3,19.82
+1.0,Large Cap Fund,2555,39,-3.4,10.7,43.8,17.34
+3.0,ALL EQUITY CATEGORIES,18396,413,11.5,19.5,30.0,0.39
+3.0,Small Cap Fund,1252,27,15.5,26.8,39.7,0.64
+3.0,Mid Cap Fund,1403,33,14.9,24.0,33.2,0.07
+3.0,Multi Cap Fund,612,20,12.9,21.3,31.6,0.33
+3.0,Dividend Yield Fund,329,9,13.8,20.7,29.2,0.3
+3.0,Large & Mid Cap Fund,1531,29,13.6,20.4,27.5,0.0
+3.0,Value Fund,907,21,11.8,19.9,28.2,0.55
+3.0,Sectoral/ Thematic,5825,130,9.8,19.4,31.8,0.86
+3.0,ELSS,2017,43,11.2,18.4,26.2,0.15
+3.0,Flexi Cap Fund,1495,32,11.8,18.2,26.4,0.07
+3.0,Focused Fund,1173,30,11.2,18.2,25.4,0.09
+3.0,Large Cap Fund,1672,36,11.6,16.4,22.2,0.0
+5.0,ALL EQUITY CATEGORIES,9665,313,11.7,20.1,29.7,0.02
+5.0,Small Cap Fund,657,23,15.7,28.4,36.8,0.3
+5.0,Mid Cap Fund,754,23,14.2,24.8,32.3,0.0
+5.0,Multi Cap Fund,272,8,14.5,22.9,30.5,0.0
+5.0,Large & Mid Cap Fund,848,27,12.9,20.9,27.0,0.0
+5.0,Value Fund,458,14,11.3,20.8,27.9,0.0
+5.0,Sectoral/ Thematic,3044,102,10.5,20.3,30.3,0.0
+5.0,ELSS,1110,34,11.5,19.0,26.1,0.0
+5.0,Focused Fund,554,21,11.3,18.6,25.2,0.0
+5.0,Flexi Cap Fund,818,25,12.2,18.3,25.6,0.0
+5.0,Large Cap Fund,897,28,11.3,16.7,22.0,0.0

@@ -1,0 +1,5 @@
+selection_rule,picks,survivors,pct_vanished,avg_excess_pp,median_excess_pp,pct_picks_beating_category,years_positive,years_tested
+Top quartile of trailing 2-year return,415,410,1.2,0.29,0.05,50.2,3,5
+Everything except the bottom quartile,1216,1185,2.5,-0.23,-0.5,46.8,2,5
+Bottom quartile (the avoid list),374,364,2.7,0.74,0.36,52.5,3,5
+Lowest-volatility third,546,526,3.7,-1.8,-1.65,40.1,1,5
