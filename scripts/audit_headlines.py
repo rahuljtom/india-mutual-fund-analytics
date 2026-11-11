@@ -114,11 +114,98 @@ def pairs_check(eq, navs):
     check("median Direct minus Regular gap (pp)", pd.Series(gaps).median(), sql.median_gap_pp)
 
 
+def month_end_matrix(eq, navs):
+    """Scheme x month table of month-end NAVs (Direct plans), a month counting only if its last NAV is within 7 days of month end."""
+    direct = eq[eq.plan_type == "Direct"].scheme_code
+    n = navs[navs.scheme_code.isin(direct)].sort_values("nav_date").copy()
+    n["ym"] = n.nav_date.dt.year * 12 + n.nav_date.dt.month
+    last = n.groupby(["scheme_code", "ym"]).tail(1)
+    last = last[((last.nav_date + pd.offsets.MonthEnd(0)) - last.nav_date).dt.days <= 7]
+    return last.pivot(index="scheme_code", columns="ym", values="nav")
+
+
+def ntile(position, size, buckets):
+    """SQL NTILE: bucket (1-based) of the row at 0-based `position` among `size` rows."""
+    base, extra = divmod(size, buckets)
+    cutoff = extra * (base + 1)
+    return position // (base + 1) + 1 if position < cutoff else extra + (position - cutoff) // base + 1
+
+
+def backtest_check(eq, navs):
+    wide = month_end_matrix(eq, navs)
+    cat = eq.set_index("scheme_code").sub_category
+    picks = {"Top quartile of trailing 2-year return": [], "Everything except the bottom quartile": [],
+             "Bottom quartile (the avoid list)": [], "Lowest-volatility third": []}
+    for year in range(2020, 2025):
+        m0 = year * 12 + 12
+        if m0 - 24 not in wide.columns or m0 not in wide.columns:
+            continue
+        months = list(range(m0 - 24, m0 + 1))
+        if not all(m in wide.columns for m in months):
+            continue
+        block = wide[months].dropna()
+        rets = block.pct_change(axis=1).iloc[:, 1:]
+        frame = pd.DataFrame({"trail": (block[m0] / block[m0 - 24]) ** 0.5 - 1, "vol": rets.std(axis=1, ddof=1)})
+        frame["fwd"] = (wide[m0 + 12] / wide[m0] - 1).reindex(frame.index) if (m0 + 12) in wide.columns else float("nan")
+        frame["cat"] = cat.reindex(frame.index)
+        for _, grp in frame.groupby("cat"):
+            if len(grp) < MIN_SCHEMES:
+                continue
+            avg = grp.fwd.mean()
+            g = grp.reset_index().sort_values(["trail", "scheme_code"], ascending=[False, True]).reset_index(drop=True)
+            g["q"] = [ntile(i, len(g), 4) for i in range(len(g))]
+            v = grp.reset_index().sort_values(["vol", "scheme_code"]).reset_index(drop=True)
+            v["t"] = [ntile(i, len(v), 3) for i in range(len(v))]
+            for name, part in (("Top quartile of trailing 2-year return", g[g.q == 1]),
+                               ("Everything except the bottom quartile", g[g.q < 4]),
+                               ("Bottom quartile (the avoid list)", g[g.q == 4]),
+                               ("Lowest-volatility third", v[v.t == 1])):
+                picks[name] += [(len(part), (part.fwd - avg).dropna().tolist())]
+    sql = pd.read_csv(TABLES / "r10_backtest_summary.csv").set_index("selection_rule")
+    for name, parts in picks.items():
+        excess = pd.Series([x for _, xs in parts for x in xs])
+        check(f"Backtest picks: {name}", sum(n for n, _ in parts), sql.loc[name].picks, tol=0)
+        check(f"Backtest survivors: {name}", len(excess), sql.loc[name].survivors, tol=0)
+        check(f"Backtest average excess pp: {name}", 100 * excess.mean(), sql.loc[name].avg_excess_pp)
+
+
+def holding_check(eq, navs):
+    wide = month_end_matrix(eq, navs)
+    sql = pd.read_csv(TABLES / "r12_holding_period.csv")
+    for years in (1, 3, 5):
+        h = 12 * years
+        total = []
+        for m in wide.columns:
+            if m - h in wide.columns:
+                both = wide[[m - h, m]].dropna()
+                total += (both[m] / both[m - h] - 1).tolist()
+        t = pd.Series(total)
+        row = sql[(sql.horizon_years == years) & (sql.sub_category == "ALL EQUITY CATEGORIES")].iloc[0]
+        check(f"{years}-year windows", len(t), row.windows, tol=0)
+        check(f"{years}-year windows with a loss %", 100 * (t < 0).mean(), row.pct_windows_with_loss, tol=0.051)
+        check(f"{years}-year median annualised %", 100 * ((1 + t) ** (1 / years) - 1).median(), row.median_annual_pct, tol=0.051)
+
+
+def cost_check():
+    gap = pd.read_csv(TABLES / "r09_direct_vs_regular.csv").set_index("sub_category").loc["ALL EQUITY CATEGORIES"].median_gap_pp
+    row = pd.read_csv(TABLES / "r11_cost_drag.csv").query("horizon_years == 10 and direct_cagr_pct == 12").iloc[0]
+
+    def corpus(rate):
+        i = (1 + rate / 100) ** (1 / 12) - 1
+        return sum(10000 * (1 + i) ** k for k in range(1, 121))  # 120 deposits at the start of each month
+
+    check("10-year SIP corpus, Direct at 12% (rupees)", corpus(12), row.sip_direct_inr, tol=1)
+    check("10-year SIP cost of Regular (rupees)", corpus(12) - corpus(12 - gap), row.sip_cost_inr, tol=1)
+
+
 def main():
     eq, navs = load()
     rolling_check(eq, navs)
     drawdown_check(eq, navs)
     pairs_check(eq, navs)
+    backtest_check(eq, navs)
+    holding_check(eq, navs)
+    cost_check()
     print("\nALL CHECKS PASSED" if not failures else f"\nFAILED: {failures}")
     return 1 if failures else 0
 
